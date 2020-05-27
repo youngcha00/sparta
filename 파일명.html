@@ -247,4 +247,43 @@ collection.insert_one({'a':'b'}) # C
 rows = collection.find({}) # R
 for row in rows:
   print(row)
-  
+ from pymongo import MongoClient
+
+url = 'mongodb://messi:neymar123@ds253388.mlab.com:53388/heroku_v6l9bbkb?retryWrites=false'
+client = MongoClient(url)
+db = client['heroku_v6l9bbkb']
+collection = db['test']
+
+collection.insert_one({'a':'b'}) # C
+collection.insert_one({'name':'bobby','age':21})
+collection.insert_one({'name':'kay','age':27})
+db.test.insert_one({'name':'john','age':30})
+rows = collection.find({}) # R
+collection.delete_many({'a':'b'})
+for row in rows:
+  if 'age' in row:
+    if row['age'] > 21:
+       print(row)
+
+rows = collection.find()
+
+result = []
+
+for row in rows:
+   if 'age' in row:
+       if row['age'] > 21:
+          result.append(row['age'])
+
+max_age = max(result)
+num = 0
+rows = collection.find()
+
+for row in rows:
+   if 'age' in row:
+       if row['age'] == max_age:
+          print(row)
+
+row = collection.find()
+result =[]
+for row in rows:
+  if 'age' in row: 
